@@ -2,6 +2,7 @@ import express, {Request, Response} from 'express';
 import { body, validationResult } from 'express-validator';
 import {RequestValidationError} from '../errors/request-validation-error';
 import {DatabaseConnectionError} from '../errors/database-connection-error';
+import {User} from '../models/user';
 import 'express-async-errors';
 
 const router = express.Router();
@@ -15,8 +16,16 @@ router.post('/api/users/signup', [
 	if (!errors.isEmpty()){
 		throw new RequestValidationError(errors.array());
 	}
-	throw new DatabaseConnectionError();
-	res.send({});
+	const {email, password} = req.body;
+	const existingUser = await User.findOne({email, password});
+
+	if (existingUser){
+		console.log("User exists");
+		res.send({});
+	}
+	const user = User.build({email, password});
+	await user.save();
+	res.send({user});
 });
 
 export {router as SignUpRouter};

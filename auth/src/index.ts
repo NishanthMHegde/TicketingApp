@@ -6,8 +6,14 @@ import {SignInRouter} from './routes/signin';
 import {SignOutRouter} from './routes/signout';
 import {errorHandler} from './middlewares/error-handler';
 import mongoose from 'mongoose';
+import cookieSession from 'cookie-session';
 
 const app = express();
+
+app.set('trust proxy', true);
+app.use(cookieSession({
+	signed:false
+}));
 app.use(json());
 app.use(SignUpRouter);
 app.use(CurrentUserRouter);
@@ -16,6 +22,9 @@ app.use(SignOutRouter);
 app.use(errorHandler);
 
 const start = async () => {
+	if (!process.env.JWT_KEY){
+		throw new Error('JWT_KEY env variable not found!');
+	}
 	try {
 	await mongoose.connect('mongodb://auth-mongo-srv:27017/data', {
 		useNewUrlParser: true,

@@ -4,6 +4,7 @@ import {RequestValidationError} from '../errors/request-validation-error';
 import {DatabaseConnectionError} from '../errors/database-connection-error';
 import {BadRequestError} from '../errors/bad-request-error';
 import {User} from '../models/user';
+import jwt from 'jsonwebtoken';
 import 'express-async-errors';
 
 const router = express.Router();
@@ -23,8 +24,11 @@ router.post('/api/users/signup', [
 	if (existingUser){
 		throw new BadRequestError('Bad Request Error');
 	}
+
 	const user = User.build({email, password});
 	await user.save();
+	const jwtUser = jwt.sign({id: user.id, email: user.email}, process.env.JWT_KEY!);
+	req.session = {jwt: jwtUser};
 	res.send({user});
 });
 

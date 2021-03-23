@@ -29,7 +29,7 @@ router.post('/api/users/signup', [
 	await user.save();
 	const jwtUser = jwt.sign({id: user.id, email: user.email}, process.env.JWT_KEY!);
 	req.session = {jwt: jwtUser};
-	res.send({user});
+	res.status(201).send({user});
 });
 
 export {router as SignUpRouter};

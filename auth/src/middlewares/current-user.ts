@@ -26,5 +26,5 @@ export const currentUser = (req:Request, res:Response, next:NextFunction) => {
 	}catch(err){
 
 	}
-	return next();
+	next();
 };

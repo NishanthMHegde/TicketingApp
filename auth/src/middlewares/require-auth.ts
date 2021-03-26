@@ -5,5 +5,6 @@ export const requireAuth = (req:Request, res:Response, next:NextFunction) => {
 	if (!req.currentUser){
 		throw new NotAuthorizedError('You are not authorized to access this page');
 	}
+	next();
 	
 };

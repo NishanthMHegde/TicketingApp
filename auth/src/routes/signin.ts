@@ -1,8 +1,8 @@
 import express, {Request, Response} from 'express';
 import {Password} from '../services/password';
 import { body, validationResult } from 'express-validator';
-import {RequestValidationError} from '../errors/request-validation-error';
-import {BadRequestError} from '../errors/bad-request-error';
+import {RequestValidationError} from '@nmhtickets/common';
+import {BadRequestError} from '@nmhtickets/common';
 import {User} from '../models/user';
 import jwt from 'jsonwebtoken';
 import 'express-async-errors';

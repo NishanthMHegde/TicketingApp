@@ -1,6 +1,6 @@
 import {SignInRouter} from './routes/signin';
 import {SignOutRouter} from './routes/signout';
-import {errorHandler} from './middlewares/error-handler';
+import {errorHandler} from '@nmhtickets/common';
 import express from 'express';
 import {json} from 'body-parser';
 import {CurrentUserRouter} from './routes/current-user';

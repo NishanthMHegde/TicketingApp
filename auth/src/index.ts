@@ -6,7 +6,7 @@ const start = async () => {
 		throw new Error('JWT_KEY env variable not found!');
 	}
 	try {
-	await mongoose.connect('mongodb://auth-mongo-srv:27017/data', {
+	await mongoose.connect('mongodb://auth-mongo-srv:27017/auth', {
 		useNewUrlParser: true,
 		useUnifiedTopology : true,
 		useCreateIndex: true

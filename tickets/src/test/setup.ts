@@ -43,5 +43,5 @@ global.signin = () =>{
 	const jsonPayload = JSON.stringify(jwtArray);
 	//convert it into a base64 from
 	const encodedJWT = Buffer.from(jsonPayload).toString('base64');
-	return [`express:sess=${encodedJWT}`];
+	return `express:sess=${encodedJWT}`;
 };

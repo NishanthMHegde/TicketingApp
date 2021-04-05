@@ -1,6 +1,6 @@
-import {app} from '../../src/app';
+import {app} from '../../app';
 import request from 'supertest';
-import {Ticket} from '../models/ticket';
+import {Ticket} from '../../models/ticket';
 
 it('returns a status code that is not 404 when creating new ticket', async ()=>{
 	const response = await request(app).post('/api/tickets').send({});
@@ -14,7 +14,7 @@ it('returns a status code that is 201 upon creating new ticket when user is sign
 	const title = 'New concert';
 	const price = 20;
 
-	const response = await request(app).post('/api/tickets').send({title, price}).set('Cookie',global.signin()[0]);
+	const response = await request(app).post('/api/tickets').send({title, price}).set('Cookie',global.signin());
 	expect(response.status).toEqual(201);
 	expect(response.body.ticket.title).toEqual(title);
 	expect(response.body.ticket.price).toEqual("20");
@@ -26,4 +26,15 @@ it('returns a status code that is 401 upon creating new ticket when user is not 
 	
 	const response = await request(app).post('/api/tickets').send({});
 	expect(response.status).toEqual(401);
+});
+
+it('returns a status of 400 when title is empty', async ()=>{
+	const title = '';
+	const price = 20;
+	await request(app).post('/api/tickets').send({title, price}).set('Cookie',global.signin()).expect(400);
+});
+
+it('returns a status of 400 when title is  not supplied', async ()=>{
+	const price = 20;
+	await request(app).post('/api/tickets').send({price}).set('Cookie',global.signin()).expect(400);
 });

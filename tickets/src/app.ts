@@ -16,7 +16,7 @@ app.use(cookieSession({
 	signed:false
 }));
 
-
+app.use(errorHandler);
 app.use(currentUser);
 
 app.use(createTicketRouter);
@@ -26,5 +26,5 @@ app.use(updateTicketRouter);
 app.all('*', async (req, res) => {
   throw new NotFoundError();
 });
-app.use(errorHandler);
+
 export {app};

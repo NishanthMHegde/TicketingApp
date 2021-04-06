@@ -1,6 +1,7 @@
 import {app} from '../../app';
 import request from 'supertest';
 import {Ticket} from '../../models/ticket';
+
 import mongoose from 'mongoose';
 
 const createTickets = async () =>{

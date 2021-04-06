@@ -7,7 +7,7 @@ it('returns a status code that is 404 when ticket is not found', async ()=>{
 	const id = new mongoose.Types.ObjectId().toHexString();
 	console.log(id);
 	const response = await request(app).get(`/api/tickets/${id}`).send({}).set('Cookie',global.signin());
-	expect(response.status).resolves.toEqual(404);
+	expect(response.status).toEqual(404);
 });
 
 it('returns the correct ticket corresponding to the ticket ID if ticket is found', async ()=>{

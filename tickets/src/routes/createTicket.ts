@@ -4,7 +4,6 @@ import {requireAuth, validateRequest} from '@nmhtickets/common';
 import {Ticket} from '../models/ticket';
 import {RequestValidationError} from '@nmhtickets/common';
 
-
 const router = express.Router();
 
 router.post('/api/tickets', requireAuth, [

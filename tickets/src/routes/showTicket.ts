@@ -1,7 +1,7 @@
 import express, { Request, Response} from 'express';
 import { NotFoundError } from '@nmhtickets/common';
 import { Ticket } from '../models/ticket';
-
+import 'express-async-errors';
 const router = express.Router();
 
 router.get('/api/tickets/:id', async (req: Request, res: Response) => {

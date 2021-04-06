@@ -34,7 +34,7 @@ afterAll(async ()=>{
 
 global.signin = () =>{
 	//create a payload
-	const payload = {id:'123', email:'test@test.com'};
+	const payload = {id:new mongoose.Types.ObjectId().toHexString(), email:'test@test.com'};
 	//sign the payload
 	const jwtToken = jwt.sign(payload, process.env.JWT_KEY!);
 	// create a Javascript object of payload

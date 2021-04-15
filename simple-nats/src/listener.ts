@@ -8,12 +8,21 @@ const stan = nats.connect('ticketing', randomBytes(4).toString('hex'), {
 
 stan.on('connect', ()=>{
 	console.log('Connected to NATS listener');
-	const subscription = stan.subscribe('ticket:created');
+	stan.on('close', ()=>{
+		console.log("Listening is exiting!");
+		process.exit();
+	});
+	const options = stan.subscriptionOptions().setManualAckMode(true).setDeliverAllAvailable().setDurableName('account-service');
+	const subscription = stan.subscribe('ticket:created', 'new-queue-group', options);
 	subscription.on('message', (msg: Message)=>{
 		const data = msg.getData();
 		if (typeof data === 'string'){
 			console.log(`Got a message with sequence number ${msg.getSequence()} and data: ${data}`);
+
 		}
-	console.log("Message received");
+		msg.ack();
 	});
 });
+
+process.on('SIGINT', ()=>{stan.close();});
+process.on('SIGTERM', ()=>{stan.close();});

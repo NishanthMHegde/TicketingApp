@@ -1,6 +1,6 @@
 import nats, {Message, Stan} from 'node-nats-streaming';
 import {randomBytes} from 'crypto';
-import {TicketCreatedListener} from './events/ticket-created-listener';
+import {TicketCreatedListener} from '@nmhtickets/common';
 
 console.clear();
 const stan = nats.connect('ticketing', randomBytes(4).toString('hex'), {
